@@ -8,7 +8,7 @@
  <!--  mem_id, mem_name, mem_pw, mem_zipcode, mem_addr, mem_de_addr, mem_phone, mem_email, mem_rec_email, mem_point, mem_regdate, mem_revdate, mem_logdate --> 
  	<insert id="join" parameterType="com.dogmong.domain.MemberVO"> 
  	
- 		INSERT INTO MEM_TBL(
+ 		INSERT INTO mem_tbl(
  			mem_id,
  			mem_name,
 	 		mem_pw,
@@ -42,6 +42,97 @@
  			mem_id = #{mem_id}
  	
  	</select>
+ 	
+ 	<select id="login" resultType="com.dogmong.domain.MemberVO"> 
+ 		SELECT 
+ 			mem_id, 
+ 			mem_name, 
+ 			mem_pw, 
+ 			mem_zipcode, 
+ 			mem_addr, 
+ 			mem_de_addr, 
+ 			mem_phone, 
+ 			mem_email, 
+ 			mem_rec_email, 
+ 			mem_point, 
+ 			mem_regdate, 
+ 			mem_revdate, 
+ 			mem_logdate
+ 		FROM 
+ 			mem_tbl
+ 		WHERE 
+ 			mem_id = #{mem_id}
+ 	</select>
+ 	
+ 	<update id="modify"> 
+ 		UPDATE 
+ 			mem_tbl
+ 		SET 
+	 		mem_zipcode = #{mem_zipcode},
+	 		mem_addr = #{mem_addr},
+	 		mem_de_addr = #{mem_de_addr},
+	 		mem_phone = #{mem_phone},
+	 		mem_email = #{mem_email},
+	 		mem_rec_email = #{mem_rec_email}, 
+ 			mem_revdate = sysdate
+ 		
+ 		WHERE
+ 			mem_id = #{mem_id}
+ 	</update>
+ 	
+ 	<select id="findPwReq" resultType="string"> 
+ 	
+	 	SELECT 
+	 		mem_id
+	 	FROM 
+	 		mem_tbl
+	 	WHERE 
+	 		mem_email = #{mem_email}
+	 			
+ 	</select>
+ 
+ 	<update id="modifyTempPw"> 
+ 		UPDATE 
+ 			mem_tbl 
+ 		SET 
+ 			mem_pw = #{mem_pw}
+ 		WHERE 
+ 			mem_email = #{mem_email}
+ 	</update> 
+ 	
+ 	<select id="currentPwConfirm" resultType="String"> 
+ 	
+ 		SELECT 
+	 		mem_pw
+	 	FROM 
+	 		mem_tbl
+	 	WHERE 
+	 		mem_id = #{mem_id} 
+	 			
+	 			
+ 	</select>
+ 	
+ 	<update id="changeNewPw"> 
+ 	
+ 		UPDATE 
+ 			mem_tbl 
+ 		SET 
+ 			mem_pw = #{mem_change_pw}
+ 		WHERE 
+ 			mem_id = #{mem_id} 
+ 			
+ 	</update> 
+ 	
+ 	<delete id="unregister"> 
+ 	
+ 		DELETE FROM 
+ 			mem_tbl
+ 		WHERE 
+ 			mem_id = #{mem_id} 
+ 	
+ 	</delete>
+ 	
+ 
  
  </mapper>
  

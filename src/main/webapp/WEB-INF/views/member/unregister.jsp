@@ -93,33 +93,24 @@
 							</div>
 							<div class="col-xl-8">
 								<div class="card-body p-md-3 text-black">
-									<h3 class="mb-5 text-center ">로그인</h3>
+									<h3 class="mb-5 text-center ">회원탈퇴</h3>
 
-									<form action="/" method="post">
-										<div class="row">
-											<div class="col-md-12 mb-4">
-												<div class="form-outline ">
-													<label class="form-label" for="mem_id">아이디</label> <input
-														type="text" id="mem_id" name="mem_id"
-														class="form-control form-control-lg" />
-												</div>
-											</div>
-										</div>
-
+									<div>
 										<div class="row">
 											<div class="col-md-12 mb-4">
 												<div class="form-outline">
-													<label class="form-label" for="mem_pw">비밀번호</label> <input
-														type="password" id="mem_pw" name="mem_pw"
-														class="form-control form-control-lg" />
+													<label class="form-label" for="mem_pw">현재 비밀번호</label> 
+													<input type="password" id="mem_pw" name="mem_pw" 
+													class="form-control form-control-lg" />
 												</div>
 											</div>
 										</div>
+										
+										<hr>
 										<div class="form-group col-md-12 text-center">
-											<button type="button" id="btnLogin" class="btn btn-primary center">로그인하기</button>
-											<button type="button" id="btnFindPw" class="btn btn-secondary">비밀번호 찾기</button>
+											<button type="button" id="btnMemUnregister" class="btn btn-primary center">회원 탈퇴하기</button>
 										</div>
-									</form>
+								</div>
 								</div>
 							</div>
 						</div>
@@ -140,52 +131,41 @@
 	<script> 
 	$(document).ready(function(){
 		
-		$("#btnLogin").on("click", function(){
-			
-			let mem_id = $("#mem_id");
+		// 회원탈퇴
+		$("#btnMemUnregister").on("click", function(){
+				
 			let mem_pw = $("#mem_pw");
-
-			if(mem_id.val() == "" || mem_id.val() == null){
-				alert("아이디를 입력하세요."); 
-				mem_id.focus();
+			
+			if(mem_pw.val() == "" || mem_pw.val() == null){
+				alert("현재 비밀번호를 입력하세요");
+				mem_cur_pw.focus();
 				return;
 			}
 			
-			if(mem_pw.val() == "" || mem_pw.val() == null){
-				alert("비밀번호를 입력하세요.");
-				mem_pw.focus();
-				return;
-			} 
-
-			$.ajax({
-				url: '/member/login',
-				type: 'post',
-				dataType: 'text',
-				data: {mem_id : mem_id.val(), mem_pw : mem_pw.val()},
-				success: function(data){
-					
-					if(data == "success"){
-						alert("로그인 성공하였습니다.");
-						location.href = "/";
-					} else if(data == "idFail"){
-						alert("가입된 아이디가 아닙니다.");
-						mem_id.focus();
-					} else if(data == "pwFail"){   
-						alert("가입된 비밀번호가 틀립니다.");
-						mem_pw.focus();
-					}
-				}
-			});
-		});	
-		
-		$("#btnFindPw").on("click", function(){
 			
-			location.href = "/member/findPw";
-
+		$.ajax({
+			url: '/member/unregister',
+			type: 'post',
+			dataType: 'text',
+			data: { mem_pw : mem_pw.val() }, 
+			success: function(data){
+				
+				if(data == "1"){
+					
+					alert("회원탈퇴 되었습니다.");
+					location.href = "/";
+					
+				}else if(data == "0"){
+					
+					alert("현재 비밀번호가 다릅니다. 확인해 주세요.");
+					mem_pw.val("");
+					mem_pw.focus();
+	
+				}
+			}
 		});
-		
-		
-		
+     });
+
 	});
 	</script>
 

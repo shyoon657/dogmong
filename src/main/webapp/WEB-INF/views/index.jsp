@@ -5,29 +5,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Blog Template · Bootstrap v4.6</title>
+    <title> DogMong_Main </title>
 
-   <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/blog/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/blog/">
 	<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/css/blog.css">
-
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900" rel="stylesheet">
     <!-- Bootstrap core CSS -->
-
-
-
-    <!-- Favicons -->
-<link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon.ico">
-<meta name="msapplication-config" content="/docs/4.6/assets/img/favicons/browserconfig.xml">
-<meta name="theme-color" content="#563d7c">
-
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -44,22 +29,24 @@
         }
       }
     </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900" rel="stylesheet">
-
   </head>
+  <script> 
+  	let msg = '${msg}';
+  	if(msg == 'modifyOK'){
+  	 	alert("회원정보가 수정되었습니다.");
+  	}
+  	
+  </script> 
+  
+  
   <body>
 <%@include file="/WEB-INF/views/include/plugin_js.jsp" %>
     
 <div class="container">
-
 <div class="container sticky-top bg-white">
 <%@include file="/WEB-INF/views/include/header.jsp" %>
 <%@include file="/WEB-INF/views/include/category.jsp" %>
 </div>
-
 
   <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
@@ -80,7 +67,6 @@
           <a href="#" class="stretched-link">Continue reading</a>
         </div>
         <div class="col-auto d-none d-lg-block">
-
         </div>
       </div>
     </div>
@@ -194,10 +180,6 @@
 
 <%@include file="/WEB-INF/views/include/footer.jsp" %>
 
-
-
-
-    
   </body>
 </html>
 

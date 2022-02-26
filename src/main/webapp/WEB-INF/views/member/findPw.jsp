@@ -93,31 +93,21 @@
 							</div>
 							<div class="col-xl-8">
 								<div class="card-body p-md-3 text-black">
-									<h3 class="mb-5 text-center ">로그인</h3>
+									<h3 class="mb-5 text-center ">비밀번호 찾기</h3>
 
 									<form action="/" method="post">
-										<div class="row">
-											<div class="col-md-12 mb-4">
-												<div class="form-outline ">
-													<label class="form-label" for="mem_id">아이디</label> <input
-														type="text" id="mem_id" name="mem_id"
-														class="form-control form-control-lg" />
-												</div>
-											</div>
-										</div>
-
+										
 										<div class="row">
 											<div class="col-md-12 mb-4">
 												<div class="form-outline">
-													<label class="form-label" for="mem_pw">비밀번호</label> <input
-														type="password" id="mem_pw" name="mem_pw"
-														class="form-control form-control-lg" />
+													<label class="form-label" for="mem_email">이메일</label> 
+													<input type="text" id="mem_email" name="mem_email" 
+													class="form-control form-control-lg" placeholder="가입 이메일을 기입 바랍니다." />
 												</div>
 											</div>
 										</div>
 										<div class="form-group col-md-12 text-center">
-											<button type="button" id="btnLogin" class="btn btn-primary center">로그인하기</button>
-											<button type="button" id="btnFindPw" class="btn btn-secondary">비밀번호 찾기</button>
+											<button type="button" id="btnTempPwSend" class="btn btn-primary center">이메일 발송(임시 비밀번호)</button>
 										</div>
 									</form>
 								</div>
@@ -140,52 +130,38 @@
 	<script> 
 	$(document).ready(function(){
 		
-		$("#btnLogin").on("click", function(){
+		// 임시 비밀번호 메일 발송
+		$("#btnTempPwSend").on("click", function(){
 			
-			let mem_id = $("#mem_id");
-			let mem_pw = $("#mem_pw");
+			let mem_email = $("#mem_email");
 
-			if(mem_id.val() == "" || mem_id.val() == null){
-				alert("아이디를 입력하세요."); 
-				mem_id.focus();
-				return;
-			}
 			
-			if(mem_pw.val() == "" || mem_pw.val() == null){
-				alert("비밀번호를 입력하세요.");
-				mem_pw.focus();
+			if(mem_email.val() == "" || mem_email.val() == null){
+				alert("이메일을 입력하세요.");
+				mem_email.focus();
 				return;
 			} 
 
 			$.ajax({
-				url: '/member/login',
+				url: '/member/findPw',
 				type: 'post',
 				dataType: 'text',
-				data: {mem_id : mem_id.val(), mem_pw : mem_pw.val()},
-				success: function(data){
+				data: {mem_email : mem_email.val()},
+				success: function(data){ 
 					
 					if(data == "success"){
-						alert("로그인 성공하였습니다.");
-						location.href = "/";
-					} else if(data == "idFail"){
-						alert("가입된 아이디가 아닙니다.");
-						mem_id.focus();
-					} else if(data == "pwFail"){   
-						alert("가입된 비밀번호가 틀립니다.");
-						mem_pw.focus();
+						alert("임시 비밀번호가 발송되었습니다. \n 로그인 후 새 비밀번호로 변경 바랍니다.");
+						location.href = "/member/login";
+					} else if(data == "fail"){
+						alert("메일 발송에 실패하였습니다. \n 관리자에 문의 바랍니다.");
+					} else if(data == "noMail"){
+						alert("가입된 이메일 주소와 다릅니다. \n 다시 확인 바랍니다. ");
+						mem_email.focus();
 					}
 				}
 			});
 		});	
-		
-		$("#btnFindPw").on("click", function(){
-			
-			location.href = "/member/findPw";
 
-		});
-		
-		
-		
 	});
 	</script>
 
